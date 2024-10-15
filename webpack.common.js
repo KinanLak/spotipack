@@ -1,5 +1,3 @@
-const 
-
 const path = require('path'); // Utilisé pour travailler avec les chemins de fichiers
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // Plugin pour générer automatiquement un fichier HTML qui inclut les bundles
 
