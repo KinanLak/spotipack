@@ -13,15 +13,33 @@ export default class UserTopArtistsManager {
                     'Authorization': 'Bearer ' + access_token
                 }
             });
-            this.topArtists = await response.json();
+
+            let topArtists = await response.json();
+
+            this.topArtists = [...topArtists.items];
+
             this.displayTopArtists();
+
+            if (response.status === 401) {
+                console.error('Erreur d\'authentification:', topArtists.error.message);
+                this.authManager.refreshTokens();
+            }
+
+            console.log('Top artists: ', this.topArtists);
+
         } catch (error) {
             console.error('Erreur lors de la récupération des top artistes:', error);
         }
     }
 
     displayTopArtists() {
+
         const container = document.getElementById('top-artists-container');
+
+        console.log(this.topArtists);
+
+        console.log(Array.isArray(this.topArtists));
+        console.log(this.topArtists.length);
         if (Array.isArray(this.topArtists) && this.topArtists.length > 0) {
             container.innerHTML = this.topArtists.map(artist => `<li>${artist.name}</li>`).join('');
         } else {

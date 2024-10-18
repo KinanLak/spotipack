@@ -1,5 +1,6 @@
 export default class HomePage {
-    constructor() {
+    constructor(authManager) {
+        this.authManager = authManager;
         this.container = document.getElementById('app-container');
     }
 
@@ -16,12 +17,28 @@ export default class HomePage {
 
     addEventListeners() {
         const goToMeButton = document.getElementById('go-to-me');
-        goToMeButton.addEventListener('click', () => {
-            // Nous utiliserons le router pour naviguer
-            window.router.navigateTo('me');
+        goToMeButton.addEventListener('click', async () => {
+            await this.handleSpotifyAuth();
+            if (this.authManager.isAuthentified()) {
+                window.router.navigateTo('me');
+            } else {
+                console.error("L'authentification a échoué");
+                // Gérer l'échec de l'authentification (afficher un message d'erreur, etc.)
+            }
         });
+    }
 
-        // Ici, vous pouvez ajouter d'autres écouteurs d'événements spécifiques à la page d'accueil
+
+    async handleSpotifyAuth() {
+        if (!this.authManager.isAuthentified()) {
+            await this.authManager.authenticate();
+            // Attendre que l'authentification soit terminée
+            while (!this.authManager.accessToken) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+        }
+        console.log('Authenticated!');
+        console.log("Access token: ", this.authManager.accessToken);
     }
 
     // Autres méthodes spécifiques à la page d'accueil
