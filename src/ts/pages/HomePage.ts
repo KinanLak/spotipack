@@ -13,6 +13,19 @@ export default class HomePage {
         </div>`;
         
         this.addEventListeners();
+
+        //s'il y a un paramètre error
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        if (error) {
+            console.log('error', error);
+
+            const errorMessage = document.createElement('p');
+            errorMessage.classList.add('error-message');
+            errorMessage.textContent = "Nous avons rencontré un problème : " + error;
+            errorMessage.style.display = 'block';
+            this.container.appendChild(errorMessage);
+        }
     }
 
     addEventListeners() {

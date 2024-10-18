@@ -1,5 +1,5 @@
 import './css/style.scss';
-import App from './js/App';
+import App from './ts/App';
 
 document.addEventListener('DOMContentLoaded', () => {
     const app = new App();

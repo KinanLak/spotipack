@@ -37,3 +37,18 @@ button {
 button:hover {
     background-color: #1ed760;
 }
+
+.error-message {
+    color:white;
+    margin-top: 20px;
+    background-color: red;
+    padding: 10px;
+    z-index: 100;
+    border-radius: 10px;
+    display: none;
+    // fixed position
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}

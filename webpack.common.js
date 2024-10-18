@@ -1,9 +1,9 @@
-
 const path = require('path'); // Utilisé pour travailler avec les chemins de fichiers
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // Plugin pour générer automatiquement un fichier HTML qui inclut les bundles
+const Dotenv = require('dotenv-safe');
 
 module.exports = {
-    entry: './src/entry.js', // Point d'entrée de l'application, ici le fichier principal JavaScript
+    entry: './src/entry.ts', // Point d'entrée de l'application, ici le fichier principal JavaScript
     output: {
         filename: 'bundle.js', // Nom du fichier de sortie pour le bundle généré
         path: path.resolve(__dirname, 'dist'), // Répertoire de sortie (généralement 'dist' pour distribution)
@@ -11,6 +11,11 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /\.ts? $ /, // Add rule for TypeScript files
+                exclude: /node_modules/,
+                use: 'ts-loader', // Use ts-loader for TypeScript files
+            },
             {
                 test: /\.js$/, // Utilise cette règle pour tous les fichiers avec l'extension .js
                 exclude: /node_modules/, // Ignore les fichiers dans node_modules
@@ -38,9 +43,13 @@ module.exports = {
             filename: 'index.html', // Nom du fichier généré
             favicon: path.resolve(__dirname, './src/images/favicon.ico')
         }),
+        new Dotenv({
+            path: './.env',
+            example: './.env.example',
+        })
     ],
     resolve: {
-        extensions: ['.js'], // Extensions à résoudre automatiquement (par défaut '.js')
+        extensions: ['.ts'], // Extensions à résoudre automatiquement (par défaut '.js')
         // Optional: ajouter d'autres extensions comme '.jsx' ou '.ts' si besoin
         // extensions: ['.js', '.jsx', '.ts'],
     },

@@ -1,11 +1,21 @@
-export default class MePage {
-    constructor(userTopArtistsManager) {
-        this.container = document.getElementById('app-container');
-        this.userTopArtistsManager = userTopArtistsManager;
+import AuthManager from '../api/AuthManager';
+import Spotify from '../api/Spotify';
+import Page from './Page';
+
+export default class MePage extends Page {
+
+    spotify: Spotify;
+    
+
+    constructor(authManager: AuthManager, spotify: Spotify) {
+        super(authManager);
+        this.spotify = spotify;
+
     }
 
     render() {
         this.container.innerHTML = `
+
         <div class="me-page">
             <h1>Mon profil</h1>
             <div id="top-artists-container"></div>
@@ -26,7 +36,7 @@ export default class MePage {
     }
 
     loadTopArtists() {
-        this.userTopArtistsManager.fetchAndDisplayTopArtists();
+        this.spotify.fetchTopArtist();
     }
 
     // Autres méthodes spécifiques à la page de profil

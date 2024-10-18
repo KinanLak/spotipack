@@ -15,9 +15,11 @@
     "@babel/core": "^7.25.8",
     "@babel/preset-env": "^7.25.8",
     "@eslint/js": "^9.12.0",
+    "@types/node": "^22.7.6",
     "babel-loader": "^9.2.1",
     "core-js": "^3.38.1",
     "css-loader": "^7.1.2",
+    "dotenv-webpack": "^8.1.0",
     "file-loader": "^6.2.0",
     "globals": "^15.11.0",
     "html-es6-template-loader": "^1.0.5",
@@ -35,12 +37,16 @@
     "sass-loader": "^16.0.2",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.10",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.3",
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0",
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "dotenv-safe": "^9.1.0",
+    "fs": "^0.0.1-security",
     "oauth-pkce": "^0.0.7"
   }
 }

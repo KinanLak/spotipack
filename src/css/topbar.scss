@@ -1,0 +1,67 @@
+/* Style de la barre de navigation */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1DB954;
+    /* Couleur verte typique de Spotify */
+    padding: 10px 20px;
+    height: 60px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Conteneur gauche : icône et nom de l'application */
+.left-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Icône Spotify */
+.spotify-icon {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+}
+
+/* Nom de l'application */
+.app-name {
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+}
+
+/* Conteneur droit : icône utilisateur, nom et bouton de déconnexion */
+.right-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Icône utilisateur */
+.user-icon {
+    width: 40px;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Nom de l'utilisateur */
+.user-name {
+    font-size: 1.2rem;
+    color: white;
+    margin-right: 20px;
+}
+
+/* Bouton de déconnexion */
+.logout-button {
+    background-color: white;
+    color: #1DB954;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.logout-button:hover {
+    background-color: #e6e6e6;
+}

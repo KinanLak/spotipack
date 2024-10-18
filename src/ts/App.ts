@@ -1,5 +1,5 @@
 import AuthManager from './api/AuthManager';
-import UserTopArtistsManager from './api/UserTopArtistsManager';
+import Spotify from './api/Spotify';
 import HomePage from './pages/HomePage';
 import MePage from './pages/MePage';
 import CallbackPage from './pages/CallbackPage';
@@ -8,11 +8,11 @@ import Router from './Router';
 export default class App {
     constructor() {
         this.authManager = new AuthManager();
-        this.userTopArtistsManager = new UserTopArtistsManager(this.authManager);
+        this.spotify = new Spotify(this.authManager);
 
         this.pages = {
             home: new HomePage(this.authManager),
-            me: new MePage(this.userTopArtistsManager),
+            me: new MePage(this.spotify),
             callback: new CallbackPage(this.authManager)
         };
 
