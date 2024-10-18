@@ -1,6 +1,6 @@
 const path = require('path'); // Utilisé pour travailler avec les chemins de fichiers
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // Plugin pour générer automatiquement un fichier HTML qui inclut les bundles
-const Dotenv = require('dotenv-safe');
+const Dotenv = require('dotenv-webpack'); // Plugin pour charger les variables d'environnement depuis un fichier .env
 
 module.exports = {
     entry: './src/entry.ts', // Point d'entrée de l'application, ici le fichier principal JavaScript
@@ -12,9 +12,11 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.ts? $ /, // Add rule for TypeScript files
+                test: /\.ts$/, // Add rule for TypeScript files
                 exclude: /node_modules/,
-                use: 'ts-loader', // Use ts-loader for TypeScript files
+                use: {
+                    loader: 'ts-loader',
+                },
             },
             {
                 test: /\.js$/, // Utilise cette règle pour tous les fichiers avec l'extension .js
@@ -45,11 +47,10 @@ module.exports = {
         }),
         new Dotenv({
             path: './.env',
-            example: './.env.example',
         })
     ],
     resolve: {
-        extensions: ['.ts'], // Extensions à résoudre automatiquement (par défaut '.js')
+        extensions: ['.ts', '.js'], // Extensions à résoudre automatiquement (par défaut '.js')
         // Optional: ajouter d'autres extensions comme '.jsx' ou '.ts' si besoin
         // extensions: ['.js', '.jsx', '.ts'],
     },

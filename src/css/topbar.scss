@@ -18,14 +18,16 @@
 
 /* Icône Spotify */
 .spotify-icon {
-    width: 40px;
+    width: 50px;
     height: auto;
-    margin-right: 10px;
+    margin-right: 20px;
+    // Couleur blanche
+    filter: invert(1);
 }
 
 /* Nom de l'application */
 .app-name {
-    font-size: 1.5rem;
+    font-size: 3rem;
     color: white;
     font-weight: bold;
 }
