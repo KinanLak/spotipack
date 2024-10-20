@@ -20,7 +20,7 @@ export default class App {
         this.spotify = new Spotify(this.authManager);
 
         this.pages = {
-            home: new HomePage(this.authManager),
+            home: new HomePage(this.authManager, this.spotify),
             me: new MePage(this.authManager, this.spotify),
             callback: new CallbackPage(this.authManager, this.spotify),
         };

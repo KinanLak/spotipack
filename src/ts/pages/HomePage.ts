@@ -1,13 +1,16 @@
 import AuthManager from "../api/AuthManager";
 import Page from "./Page";
 import Button from "../components/Button";
+import Spotify from "../api/Spotify";
+
 import "../../css/global.scss";
+
 
 export default class HomePage extends Page {
     private connectToSpotify: Button;
 
-    constructor(authManager: AuthManager) {
-        super(authManager);
+    constructor(authManager: AuthManager, spotify: Spotify) {
+        super(authManager, spotify);
 
         this.connectToSpotify = new Button("login-button", "Se connecter à Spotify", ["button", "login-button"], () => {
             this.handleSpotifyAuth();

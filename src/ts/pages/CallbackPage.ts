@@ -4,11 +4,9 @@ import Spotify from '../api/Spotify';
 
 export default class CallbackPage extends Page {
 
-    spotify: Spotify;
-
     constructor(authManager: AuthManager, spotify: Spotify) {
-        super(authManager);
-        this.spotify = spotify;
+        super(authManager, spotify);
+
     }
 
     async render() {

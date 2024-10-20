@@ -3,18 +3,18 @@ import Button from "../components/Button";
 
 import "../../css/topbar.scss";
 import spotifyIcon from "../../images/spotify-icon.png";
+import Spotify from "../api/Spotify";
 
 export default class Page {
     protected authManager: AuthManager;
+    protected spotify: Spotify;
     public container: HTMLElement;
 
-    private logoutButton!: Button;
     private topBar!: HTMLDivElement;
-    private userIcon!: HTMLImageElement;
-    private spotifyIcon!: HTMLImageElement;
 
-    constructor(authManager: AuthManager) {
+    constructor(authManager: AuthManager, spotify: Spotify) {
         this.authManager = authManager;
+        this.spotify = spotify;
 
         this.topBar = document.getElementById("top-bar") as HTMLDivElement;
         this.setupTopBar();
@@ -37,9 +37,20 @@ export default class Page {
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.has("error") && this.showErrorMessage(urlParams.get("error")!);
 
-        if (this.authManager.isAuthentified() && window.location.hash != "#home") {
+        if (this.authManager.isAuthentified() && window.location.hash != "#home" && window.location.hash != "#callback") {
             let rightContainer = this.topBar.children[1] as HTMLElement;
             rightContainer.style.display = "flex";
+
+            this.spotify.getLoggedUserInfos().then(() => {
+                console.log("loggedUser", this.spotify.loggedUser);
+                rightContainer.children[0].setAttribute(
+                    "src",
+                    this.spotify.loggedUser ? this.spotify.loggedUser.pictureURL.toString() : ""
+                );
+                rightContainer.children[1].textContent = this.spotify.loggedUser
+                    ? this.spotify.loggedUser.name
+                    : "Unknown";
+            });
         }
     }
 
@@ -58,10 +69,10 @@ export default class Page {
         this.topBar.classList.add("top-bar");
 
         // Création de l'icône Spotify
-        this.spotifyIcon = document.createElement("img");
-        this.spotifyIcon.src = spotifyIcon; // lien vers l'icône de Spotify
-        this.spotifyIcon.alt = "Spotify Icon";
-        this.spotifyIcon.classList.add("spotify-icon");
+        const spotifyIconElement = document.createElement("img");
+        spotifyIconElement.src = spotifyIcon; // lien vers l'icône de Spotify
+        spotifyIconElement.alt = "Spotify Icon";
+        spotifyIconElement.classList.add("spotify-icon");
 
         // Nom de l'application à côté de l'icône
         const appName = document.createElement("span");
@@ -71,31 +82,31 @@ export default class Page {
         // Conteneur gauche pour l'icône et le nom
         const leftContainer = document.createElement("div");
         leftContainer.classList.add("left-container");
-        leftContainer.appendChild(this.spotifyIcon);
+        leftContainer.appendChild(spotifyIconElement);
         leftContainer.appendChild(appName);
 
         // Icône utilisateur
-        this.userIcon = document.createElement("img");
-        this.userIcon.src = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"; // lien vers une icône d'utilisateur
-        this.userIcon.alt = "User Icon";
-        this.userIcon.classList.add("user-icon");
+        const userIcon = document.createElement("img");
+        userIcon.src = "https://placekitten.com/200/200";
+        userIcon.alt = "User Icon";
+        userIcon.classList.add("user-icon");
 
         // Nom de l'utilisateur
         const userName = document.createElement("span");
-        userName.textContent = "John Doe";
+        userName.textContent = this.spotify.loggedUser ? this.spotify.loggedUser.name : "Unknown";
         userName.classList.add("user-name");
 
         const rightContainer = document.createElement("div");
         rightContainer.classList.add("right-container");
 
         // Bouton de déconnexion
-        this.logoutButton = new Button("logout-button", "Déconnecter", ["logout-button"], () => {
+        const logoutButton = new Button("logout-button", "Déconnecter", ["logout-button"], () => {
             this.authManager.logout();
         });
 
-        rightContainer.appendChild(this.userIcon);
+        rightContainer.appendChild(userIcon);
         rightContainer.appendChild(userName);
-        rightContainer.appendChild(this.logoutButton);
+        rightContainer.appendChild(logoutButton);
 
         // Si l'utilisateur n'est pas connecté, on cache le conteneur de droite
         rightContainer.style.display = "none";

@@ -3,8 +3,12 @@ import { User, Track, Artist, Album, mapToAlbum, mapToArtist, mapToTrack } from 
 
 export default class Spotify {
     private authManager: AuthManager;
-
     public loggedUser: User | null;
+
+    public topArtists: Artist[] = [];
+    public topTracks: Track[] = [];
+
+
 
     constructor(authManager: AuthManager) {
         this.authManager = authManager;
@@ -60,6 +64,8 @@ export default class Spotify {
         console.log("topItems", topItems);
         
         this.loggedUser = loggedUser;
+        this.getLoggedUserTopsItems();
+
     }
 
     private async getLoggedUserTopsItems(): Promise<{ topArtists: Artist[]; topTracks: Track[] }> {
