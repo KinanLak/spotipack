@@ -1,3 +1,5 @@
+import { User } from '../models';
+
 export default class AuthManager {
 
     private _expiresAt: number;
@@ -151,7 +153,7 @@ export default class AuthManager {
     }
 
     public isAuthentified() {
-        this.printTokens();
+        //this.printTokens();
         if (this._accessToken && !this.isExpired()) {
             return true;
         } else {

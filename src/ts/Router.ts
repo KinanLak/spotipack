@@ -50,8 +50,6 @@ export default class Router {
     }
 
     private clearPage(pageName: string) {
-        if (this.pages[pageName]) {
-            this.pages[pageName].container.innerHTML = '';
-        }
+        this.pages[pageName].container.innerHTML = '';
     }
 }

@@ -1,34 +1,205 @@
 import AuthManager from "./AuthManager";
-
-const BASE_URL: string = 'https://api.spotify.com/v1';
+import { User, Track, Artist, Album, mapToAlbum, mapToArtist, mapToTrack } from "../models";
 
 export default class Spotify {
     private authManager: AuthManager;
 
+    public loggedUser: User | null;
+
     constructor(authManager: AuthManager) {
         this.authManager = authManager;
+        this.loggedUser = null;
     }
 
-    public async getTopArtists() {
+    private get headers() {
+        return {
+            Authorization: "Bearer " + this.authManager.getAccessToken(),
+        };
+    }
+
+    public async getLoggedUserInfos() {
+        let response: Response;
+
         try {
-            const access_token = localStorage.getItem('access_token');
-            const response = await fetch(BASE_URL + '/me/top/artists', {
-                headers: {
-                    'Authorization': 'Bearer ' + access_token
-                }
+            response = await fetch(process.env.BASE_URL + "/me", {
+                headers: this.headers,
             });
-
-            const jsonResponse = await response.json();
-            let topArtists = [...jsonResponse.items];
-
-
-            if (response.status === 401) {
-                console.error('Erreur d\'authentification:', jsonResponse.error.message);
-                this.authManager.refreshTokens();
-            }
-
         } catch (error) {
-            console.error('Erreur lors de la récupération des top artistes:', error);
+            throw new Error("Erreur lors de la récupération des informations de l'utilisateur:\n" + error);
         }
+
+        if (!response.ok) {
+            throw new Error(
+                "Erreur lors de la récupération des informations de l'utilisateur (status code:" + response.status + ")"
+            );
+        }
+
+        const body = await response.json();
+
+        let loggedUser: User = {
+            id: body.id,
+            name: body.display_name,
+            email: body.email,
+            country: body.country,
+            followers: body.followers.total,
+            spotifyPlan: body.product,
+            pictureURL: new URL(body.images[0].url),
+            userURL: new URL(body.external_urls.spotify),
+
+            topArtists: [],
+            topTracks: [],
+            topGenres: [],
+        };
+
+        let topItems = await this.getLoggedUserTopsItems();
+
+        loggedUser.topTracks = topItems.topTracks;
+        loggedUser.topArtists = topItems.topArtists;
+
+        console.log("loggedUser :", loggedUser);
+        console.log("topItems", topItems);
+        
+        this.loggedUser = loggedUser;
+    }
+
+    private async getLoggedUserTopsItems(): Promise<{ topArtists: Artist[]; topTracks: Track[] }> {
+        let response: Response;
+
+        try {
+            response = await fetch(process.env.BASE_URL + "/me/top/artists", {
+                headers: this.headers,
+            });
+        } catch (error) {
+            throw new Error("Erreur lors de la récupération des informations de l'utilisateur:\n" + error);
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                "Erreur lors de la récupération des informations de l'utilisateur (status code:" + response.status + ")"
+            );
+        }
+
+        let body = await response.json();
+
+        let topArtists: Artist[] = body.items.map(mapToArtist);
+
+        try {
+            response = await fetch(process.env.BASE_URL + "/me/top/tracks", {
+                headers: this.headers,
+            });
+        } catch (error) {
+            throw new Error("Erreur lors de la récupération des informations de l'utilisateur:\n" + error);
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                "Erreur lors de la récupération des informations de l'utilisateur (status code:" + response.status + ")"
+            );
+        }
+
+        body = await response.json();
+
+        let topTracks: Track[] = body.items.map(mapToTrack);
+
+        return { topArtists, topTracks };
+    }
+
+    private async getAlbumInfos(albumId: string): Promise<Album> {
+        let response: Response;
+
+        try {
+            response = await fetch(process.env.BASE_URL + "/albums/" + albumId, {
+                headers: this.headers,
+            });
+        } catch (error) {
+            throw new Error("Erreur lors de la récupération des informations de l'album:\n" + error);
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                "Erreur lors de la récupération des informations de l'album (status code:" + response.status + ")"
+            );
+        }
+
+        let body = await response.json();
+
+        return {
+            id: body.id,
+            name: body.name,
+            releaseDatePrecision: body.release_date_precision,
+            releaseDate: new Date(body.release_date),
+            totalTracks: body.total_tracks,
+            albumType: body.album_type,
+            pictureURL: new URL(body.images[0].url),
+            albumURL: new URL(body.external_urls.spotify),
+            copyright: body.label,
+            label: body.label,
+            genres: body.genres,
+            artists: [...body.artists],
+            tracks: [...body.tracks],
+        };
+    }
+
+    private async getArtistInfos(artistId: string): Promise<Artist> {
+        let response: Response;
+
+        try {
+            response = await fetch(process.env.BASE_URL + "/artists/" + artistId, {
+                headers: this.headers,
+            });
+        } catch (error) {
+            throw new Error("Erreur lors de la récupération des informations de l'artiste:\n" + error);
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                "Erreur lors de la récupération des informations de l'artiste (status code:" + response.status + ")"
+            );
+        }
+
+        let body = await response.json();
+
+        return {
+            id: body.id,
+            name: body.name,
+            popularity: body.popularity,
+            genres: body.genres,
+            followers: body.followers.total,
+            artistURL: new URL(body.external_urls.spotify),
+            pictureURL: new URL(body.images[0].url),
+        };
+    }
+
+    private async getTrackInfos(trackId: string): Promise<Track> {
+        let response: Response;
+
+        try {
+            response = await fetch(process.env.BASE_URL + "/tracks/" + trackId, {
+                headers: this.headers,
+            });
+        } catch (error) {
+            throw new Error("Erreur lors de la récupération des informations du morceau:\n" + error);
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                "Erreur lors de la récupération des informations du morceau (status code:" + response.status + ")"
+            );
+        }
+
+        let body = await response.json();
+
+        return {
+            id: body.id,
+            name: body.name,
+            duration: body.duration_ms,
+            popularity: body.popularity,
+            explicit: body.explicit,
+            trackNumber: body.track_number,
+            album: body.album,
+            artists: body.artists,
+            trackURL: new URL(body.external_urls.spotify),
+            previewURL: new URL(body.preview_url),
+        };
     }
 }

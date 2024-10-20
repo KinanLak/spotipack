@@ -1,14 +1,17 @@
-import { assert } from 'console';
 import AuthManager from '../api/AuthManager';
 import Page from './Page';
+import Spotify from '../api/Spotify';
 
 export default class CallbackPage extends Page {
 
-    constructor(authManager: AuthManager,) {
+    spotify: Spotify;
+
+    constructor(authManager: AuthManager, spotify: Spotify) {
         super(authManager);
+        this.spotify = spotify;
     }
 
-    render() {
+    async render() {
 
         super.render();
 
@@ -18,7 +21,8 @@ export default class CallbackPage extends Page {
 
         this.container.appendChild(callbackDiv);
 
-        this.authManager.handleSpotifyCallback();
+        await this.authManager.handleSpotifyCallback();
+        await this.spotify.getLoggedUserInfos();
 
     }
 }

@@ -1,29 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+@font-face {
+    font-family: 'Spotify';
+    src: url('https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2')format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 
-:root > * {
+body {
     --primary: #1DB954;
-    --secondary: #181818;
+    --secondary: #121212;
     --text-color: white;
+    --pill-bg: #282828; // Darker background for pills
+    --pill-hover: #333333; // Hover effect for pills
+
     background-color: var(--secondary);
     color: var(--text-color);
 
     padding: 0px;
-    margin: 0px;    
+    margin: 0px;
 
-    font-family: 'Montserrat', serif !important;
+    font-family: 'Spotify', 'Montserrat', serif !important;
 }
 
-.profile-pic {
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    margin-top: 20px;
-}
+#app-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.user-info {
-    margin-top: 20px;
+    padding-top: 2rem;
 }
 
 button {
@@ -37,6 +42,7 @@ button {
     transition: background-color 0.3s;
     margin: 20px;
     font-weight: bold;
+    font-family: inherit;
 }
 
 button:hover {
@@ -44,14 +50,13 @@ button:hover {
 }
 
 .error-message {
-    color:white;
+    color: white;
     margin-top: 20px;
     background-color: red;
     padding: 10px;
     z-index: 100;
     border-radius: 10px;
     display: none;
-    // fixed position
     position: fixed;
     top: 20px;
     left: 50%;

@@ -22,7 +22,7 @@ export default class App {
         this.pages = {
             home: new HomePage(this.authManager),
             me: new MePage(this.authManager, this.spotify),
-            callback: new CallbackPage(this.authManager)
+            callback: new CallbackPage(this.authManager, this.spotify),
         };
 
         this.router = new Router(this.pages, this.authManager);

@@ -1,6 +1,7 @@
 const path = require('path'); // Utilisé pour travailler avec les chemins de fichiers
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // Plugin pour générer automatiquement un fichier HTML qui inclut les bundles
 const Dotenv = require('dotenv-webpack'); // Plugin pour charger les variables d'environnement depuis un fichier .env
+const { SourceMapDevToolPlugin } = require('webpack'); // Plugin pour générer des source maps
 
 module.exports = {
     entry: './src/entry.ts', // Point d'entrée de l'application, ici le fichier principal JavaScript
@@ -37,6 +38,10 @@ module.exports = {
                 test: /\.html$/,
                 use: ['html-loader'], // Permet d'importer des fichiers HTML dans les fichiers JavaScript
             },
+            {
+                test: /\.json$/,
+                type: 'json',
+            },
         ],
     },
     plugins: [
@@ -47,7 +52,13 @@ module.exports = {
         }),
         new Dotenv({
             path: './.env',
-        })
+        }),
+        new SourceMapDevToolPlugin({
+            filename: '[file].map',
+            exclude: ['vendor.js', 'node_modules/@fortawesome/fontawesome-free/css/all.min.css'], // Exclut FontAwesome et tout fichier tiers ou non nécessaire
+            append: '\n//# sourceMappingURL=[url]', // Ajoute la source map à la fin du fichier
+            exclude: ['vendor.js'] // Exclut les fichiers tiers comme FontAwesome
+        }),
     ],
     resolve: {
         extensions: ['.ts', '.js'], // Extensions à résoudre automatiquement (par défaut '.js')

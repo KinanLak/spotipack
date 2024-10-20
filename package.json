@@ -31,6 +31,7 @@
     "postcss-loader": "^8.1.1",
     "postcss-nested": "^6.2.0",
     "postcss-preset-env": "^10.0.7",
+    "prettier": "^3.0.0-alpha.6",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.79.5",
     "sass-loader": "^16.0.2",
@@ -44,6 +45,7 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.6.0",
     "dotenv-webpack": "^8.1.0",
     "fs": "^0.0.1-security",
     "oauth-pkce": "^0.0.7"

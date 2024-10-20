@@ -1,4 +1,4 @@
-import './css/style.scss';
+import './css/global.scss';
 import App from './ts/App';
 
 document.addEventListener('DOMContentLoaded', () => {
