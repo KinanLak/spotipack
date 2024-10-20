@@ -38,10 +38,10 @@ export default class Page {
         urlParams.has("error") && this.showErrorMessage(urlParams.get("error")!);
 
         if (this.authManager.isAuthentified() && window.location.hash != "#home" && window.location.hash != "#callback") {
-            let rightContainer = this.topBar.children[1] as HTMLElement;
-            rightContainer.style.display = "flex";
-
-            this.spotify.getLoggedUserInfos().then(() => {
+            
+            await this.spotify.getLoggedUserInfos().then(() => {
+                let rightContainer = this.topBar.children[1] as HTMLElement;
+                rightContainer.style.display = "flex";
                 console.log("loggedUser", this.spotify.loggedUser);
                 rightContainer.children[0].setAttribute(
                     "src",

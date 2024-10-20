@@ -11,10 +11,11 @@ export default class MePage extends Page {
 
     public async render() {
         await super.render();
-        await this.renderContent();
+        this.renderContent();
     }
 
     public async renderContent() {
+        console.error(this.spotify.loggedUser);
         this.container.innerHTML = `
         <div class="user-profile">
             <div class="user-header">
