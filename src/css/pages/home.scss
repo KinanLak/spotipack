@@ -1,0 +1,64 @@
+.home-page {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    padding-top: 10rem;
+    box-sizing: border-box;
+    background: var(--background-color);
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        background-color: transparent;
+    }
+}
+
+.home-page-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.home-page-title {
+    font-size: 3.75rem;
+    font-weight: bold;
+    color: var(--text-color);
+    text-align: center;
+    z-index: 1;
+}
+
+.login-button {
+    font-size: 2rem;
+    border-radius: 9999px;
+}
+
+.spotify-btn {
+    font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+    .home-page {
+        padding: 1rem;
+    }
+
+    .home-page-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .home-page-title {
+        font-size: 3rem;
+    }
+
+    .spotify-btn {
+        font-size: 1.5rem;
+    }
+}

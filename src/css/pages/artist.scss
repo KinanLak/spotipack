@@ -1,0 +1,105 @@
+.artist-page {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-artist-title {
+    font-size: 4rem;
+    font-weight: bold;
+    //margin-left: 1rem !important;
+}
+
+.page-artist-infos {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.page-artist-infos img {
+    border-radius: 50%;
+    width: 16rem;
+    height: 16rem;
+}
+
+.page-artist-genres {
+    font-size: 1em;
+    color: #666;
+}
+
+.page-artist-followers {
+    font-size: 1em;
+}
+
+.page-artist-spotify-icon {
+    opacity: 0;
+    width: 3rem !important;
+    height: auto !important;
+
+    min-width: 3rem;
+    min-height: 3rem;
+    transition: 0.3s;
+}
+
+.page-artist-title-div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    margin-left: 2rem;
+    gap: 1rem;
+}
+
+.page-artist-title-div:hover .page-artist-spotify-icon {
+    opacity: 1;
+    // change color to green with fill
+    fill: var(--primary);
+}
+
+.page-artist-title-div:hover .page-artist-title,
+.page-artist-spotify-icon:hover {
+    transition: 0.3s;
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--primary);
+}
+
+.page-artist-title-div:hover .page-artist-spotify-icon {
+    // change color to green
+    filter: invert(61%) sepia(98%) saturate(1419%) hue-rotate(89deg) brightness(88%) contrast(78%);
+}
+
+.page-artist-title-top-tracks {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+.page-artist-top-tracks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    width: 80%;
+}
+
+.track-pill {
+    font-size: 1rem;
+    flex-basis: auto;
+}
+
+.page-artist-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4rem;
+    margin-bottom: 2rem;
+    width: 80%;
+    font-size: 1.5rem;
+}
+
+.page-artist-popularity {
+    color: var(--text-color);
+}

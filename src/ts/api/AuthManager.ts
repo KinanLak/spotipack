@@ -1,5 +1,3 @@
-import { User } from '../models';
-
 export default class AuthManager {
 
     private _expiresAt: number;
@@ -63,7 +61,6 @@ export default class AuthManager {
         let url = new URL(process.env.AUTH_URL!)
         url.search = new URLSearchParams(params).toString();
 
-        // redirect to the Spotify authentication page
         window.location.href = url.toString();
 
     }
@@ -170,12 +167,18 @@ export default class AuthManager {
         return this._accessToken;
     }
 
-    public restoreTokens() {
+    public restoreTokens(): boolean {
         this._codeVerifier = localStorage.getItem('codeVerifier');
         this._codeChallenge = localStorage.getItem('codeChallenge');
         this._accessToken = localStorage.getItem('access_token');
         this._refreshToken = localStorage.getItem('refresh_token');
         this._expiresAt = parseInt(localStorage.getItem('expires_at') || '0');
+
+        if (this.isAuthentified()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private storeAccessToken() {
@@ -200,13 +203,11 @@ export default class AuthManager {
     }
 
     public async handleSpotifyCallback() {
-        // Restore the tokens from the local storage then use the code from the URL to get the access token
         this.restoreTokens();
 
-        // Check for null values for codeVerifier
         if (!this._codeVerifier || this._codeVerifier === '') {
             console.error('No code verifier');
-            window.router.navigateTo('home?error=no_code_verifier');
+            window.router.navigateTo('home', {"error": "Pas de code de vérification" });
             return;
         }
 
@@ -215,7 +216,7 @@ export default class AuthManager {
         let codeCallback = urlParams.get('code');
         if (!codeCallback || codeCallback === '') {
             console.error('No code in URL');
-            window.router.navigateTo('home?error=no_code');
+            window.router.navigateTo('home', {"error": "Pas de code de callback" });
             return;
         }
         this._codeCallback = codeCallback;
@@ -228,7 +229,7 @@ export default class AuthManager {
 
         } else {
             console.error("Authentication failed");
-            window.router.navigateTo('home?error=auth_failed');
+            window.router.navigateTo('home', {"error": "Authentification échouée" });
         }
 
         this.cleanUrlParams();
@@ -241,7 +242,6 @@ export default class AuthManager {
     }
 
     public logout() {
-        // Logout the user by clearing the tokens and redirecting to the home page
         this._expiresAt = 0;
         this._accessToken = null;
         this._refreshToken = null;

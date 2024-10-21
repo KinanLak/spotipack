@@ -1,0 +1,90 @@
+.track-page {
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-track-title {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.page-track-infos {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.page-track-infos img {
+    border-radius: 50%;
+    width: 16rem;
+    height: 16rem;
+}
+
+.page-track-artists {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+}
+
+.page-track-artists .artist-pill {
+    flex-basis: auto;
+    align-items: center;
+    justify-content: space-around;
+    max-width: none;
+}
+
+.page-track-duration {
+    font-size: 1em;
+}
+
+.page-track-spotify-icon {
+    opacity: 0;
+    width: 3rem !important;
+    height: auto !important;
+
+    min-width: 3rem;
+    min-height: 3rem;
+    transition: 0.3s;
+}
+
+.page-track-title-div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    margin-left: 2rem;
+    gap: 1rem;
+}
+
+.page-track-title-div:hover .page-track-spotify-icon {
+    opacity: 1;
+    fill: var(--primary);
+}
+
+.page-track-title-div:hover .page-track-title,
+.page-track-spotify-icon:hover {
+    transition: 0.3s;
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--primary);
+}
+
+.page-track-title-div:hover .page-track-spotify-icon {
+    filter: invert(61%) sepia(98%) saturate(1419%) hue-rotate(89deg) brightness(88%) contrast(78%);
+}
+
+.page-track-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4rem;
+    margin-bottom: 2rem;
+    width: 80%;
+    font-size: 1.5rem;
+}
+
+.page-track-popularity {
+    color: var(--text-color);
+}

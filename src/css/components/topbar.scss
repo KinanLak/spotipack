@@ -1,0 +1,106 @@
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(29, 185, 84, 0.7);
+
+    padding: 0.5rem 1rem;
+
+    height: 4rem;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    backdrop-filter: blur(5px);
+}
+
+.top-bar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(5px);
+    z-index: -1;
+}
+
+.left-container {
+    display: flex;
+    align-items: center;
+}
+
+.spotify-icon {
+    width: 3.5rem;
+    height: auto;
+    margin-right: 20px;
+    filter: invert(1);
+}
+
+.app-name {
+    font-size: 3rem;
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.right-container {
+    display: flex;
+    align-items: center;
+    padding-right: 1rem;
+    height: 3rem;
+}
+
+.logout-button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-weight: bold;
+    height: 3rem;
+}
+
+.logout-button:hover {
+    background-color: #e6e6e6;
+}
+
+.user-icon {
+    height: 2.5rem;
+    border: 0.25rem solid var(--secondary);
+    width: auto;
+    border-radius: 2rem;
+    margin-right: 1rem;
+    align-self: center;
+}
+
+@media (max-width: 600px) {
+    .user-name {
+        display: none;
+    }
+
+    .app-name {
+        display: none;
+    }
+
+    .user-icon {
+        //height: 2rem;
+        margin-right: 0rem;
+    }
+}
+.user-name {
+    font-size: 1.2rem;
+    color: white;
+    margin-right: 20px;
+}
+
+.user-profile {
+    display: flex;
+    background-color: var(--secondary);
+    border-radius: 4rem;
+    height: 3rem;
+}

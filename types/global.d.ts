@@ -1,4 +1,4 @@
-import Router from '../src/ts/Router';
+import Router from "../src/ts/Router";
 
 declare global {
     interface Window {

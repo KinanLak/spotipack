@@ -1,18 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 @font-face {
-    font-family: 'Spotify';
-    src: url('https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2')format('woff2');
+    font-family: "Spotify";
+    src: url("https://encore.scdn.co/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2")
+        format("woff2");
     font-weight: 700;
     font-style: normal;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 body {
-    --primary: #1DB954;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh);
+
+    --primary: #1db954;
     --secondary: #121212;
     --text-color: white;
-    --pill-bg: #282828; // Darker background for pills
-    --pill-hover: #333333; // Hover effect for pills
+    --pill-bg: #282828;
+    --pill-hover: #333333;
 
     background-color: var(--secondary);
     color: var(--text-color);
@@ -20,7 +30,11 @@ body {
     padding: 0px;
     margin: 0px;
 
-    font-family: 'Spotify', 'Montserrat', serif !important;
+    font-family: "Spotify", "Montserrat", serif !important;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #app-container {
@@ -28,11 +42,13 @@ body {
     justify-content: center;
     align-items: center;
 
-    padding-top: 2rem;
+    padding-top: 5rem;
+
+    flex-direction: column;
 }
 
 button {
-    background-color: #1DB954;
+    background-color: #1db954;
     border: none;
     color: white;
     padding: 15px 30px;
@@ -49,16 +65,67 @@ button:hover {
     background-color: #1ed760;
 }
 
-.error-message {
-    color: white;
-    margin-top: 20px;
-    background-color: red;
-    padding: 10px;
+.error-popup {
+    padding: 1rem;
+
+    width: 18rem;
+
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0.5rem;
+    align-items: center;
+    flex-direction: column;
+    color: black;
+
+    background-color: rgb(255, 42, 42, 0.8);
+    backdrop-filter: blur(5px);
+
     z-index: 100;
-    border-radius: 10px;
+    border-radius: 2rem;
     display: none;
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute;
+    top: 2rem;
+    left: calc(50% - 9rem);
+
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+
+    animation: slide-from-top 0.5s ease-out;
+
+    @keyframes slide-from-top {
+        0% {
+            transform: translateY(-200%);
+        }
+        100% {
+            transform: translateY(0%);
+        }
+    }
 }
+
+.error-close-button {
+    margin: 0.25rem;
+    padding: 0.5rem 2rem;
+    background-color: white;
+    color: black;
+    font-size: 1rem;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+}
+
+.error-close-button:hover {
+    background-color: var(--secondary);
+    color: var(--text-color);
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.user-profile:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+

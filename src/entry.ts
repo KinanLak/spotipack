@@ -1,7 +1,7 @@
-import './css/global.scss';
-import App from './ts/App';
+import "./css/global.scss";
+import App from "./ts/App";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     const app = new App();
     app.init();
 });

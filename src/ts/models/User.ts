@@ -1,4 +1,4 @@
-import {Artist, Track, Genre} from "../models";
+import { Artist, Track, Genre } from "../models";
 
 export interface User {
     id: string;

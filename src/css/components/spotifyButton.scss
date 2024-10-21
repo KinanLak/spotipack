@@ -1,0 +1,80 @@
+.spotify-btn {
+    position: relative;
+    padding: 20px 40px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #1db954, #1ed760);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
+    overflow: hidden;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #1db954, #1ed760, #1db954);
+
+        filter: blur(10px);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+
+        z-index: -1;
+    }
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(29, 185, 84, 0.8);
+
+        color: #fff;
+
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.particles {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #1db954;
+    border-radius: 50%;
+    animation: float 6s infinite ease-in-out;
+    opacity: 1;
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+        box-shadow: 0 0 15px rgba(22, 241, 99, 0.9);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-100px);
+        box-shadow: 0 0 0px rgba(19, 224, 91, 0);
+        opacity: 0;
+    }
+}

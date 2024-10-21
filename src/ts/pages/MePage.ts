@@ -1,8 +1,11 @@
 import AuthManager from "../api/AuthManager";
 import Spotify from "../api/Spotify";
 import Page from "./Page";
+import { ArtistPill, TrackPill } from "../components";
 
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import "../../css/components/artistPill.scss";
+import "../../css/components/trackPill.scss";
+import "../../css/pages/me.scss";
 
 export default class MePage extends Page {
     constructor(authManager: AuthManager, spotify: Spotify) {
@@ -14,52 +17,40 @@ export default class MePage extends Page {
         this.renderContent();
     }
 
-    public async renderContent() {
-        console.error(this.spotify.loggedUser);
-        this.container.innerHTML = `
-        <div class="user-profile">
-            <div class="user-header">
-                <img src="${this.spotify.loggedUser?.pictureURL}" alt="Profile Picture" class="profile-image">
-                <div class="user-info">
-                <h1 class="user-name">${this.spotify.loggedUser?.name}</h1>
-                <p class="user-email
-                "><i class="fas fa-envelope"></i> ${this.spotify.loggedUser?.email}</p>
-                <a href="${this.spotify.loggedUser?.userURL}" class="spotify-link"><i class="fab fa-spotify"></i> View Spotify Profile</a>
-                </div>
-            </div>
-        </div>
-        `;
+    private async renderContent() {
+        document.title = "Me - Spotify Stats";
+
+        let artistTitle = document.createElement("span");
+        artistTitle.classList.add("artist-title");
+        artistTitle.textContent = "Vos artistes préférés";
+        this.container.appendChild(artistTitle);
+
+        let userStats = document.createElement("div");
+        userStats.id = "user-artists";
+        userStats.classList.add("user-artists");
+        this.spotify.loggedUser?.topArtists.forEach((artist) => {
+            if (userStats) {
+                const artistPill = new ArtistPill(artist);
+                userStats.appendChild(artistPill);
+            }
+        });
+
+        this.container.appendChild(userStats);
+
+        let trackTitle = document.createElement("span");
+        trackTitle.classList.add("track-title");
+        trackTitle.textContent = "Vos titres préférés";
+        this.container.appendChild(trackTitle);
+
+        let userTracks = document.createElement("div");
+        userTracks.id = "user-tracks";
+        userTracks.classList.add("user-tracks");
+        this.spotify.loggedUser?.topTracks.forEach((track) => {
+            if (userTracks) {
+                const trackPill = new TrackPill(track);
+                userTracks.appendChild(trackPill);
+            }
+        });
+        this.container.appendChild(userTracks);
     }
 }
-
-/*
-        <div class="user-profile">
-            <div class="user-header">
-                <img src="https://i.scdn.co/image/ab6775700000ee859a621ac806a01fa0648b2fd3" alt="Profile Picture" class="profile-image">
-                <div class="user-info">
-                <h1 class="user-name">Kinan Lakhdar</h1>
-                <p class="user-email"><i class="fas fa-envelope"></i> kinan.lakh@gmail.com</p>
-                <a href="https://open.spotify.com/user/rp2kd0exmkazchkq6sx7znolf" class="spotify-link"><i class="fab fa-spotify"></i> View Spotify Profile</a>
-                </div>
-            </div>
-
-            <div class="user-stats">
-                <div class="pill">
-                <i class="fas fa-flag"></i>
-                <p>Country: <strong>FR</strong></p>
-                </div>
-                <div class="pill">
-                <i class="fas fa-users"></i>
-                <p>Followers: <strong>3</strong></p>
-                </div>
-                <div class="pill">
-                <i class="fas fa-music"></i>
-                <p>Spotify Plan: <strong>Premium</strong></p>
-                </div>
-                <div class="pill">
-                <i class="fas fa-exclamation-circle"></i>
-                <p>Explicit Content Filter: <strong>Disabled</strong></p>
-                </div>
-            </div>
-        </div>
-*/

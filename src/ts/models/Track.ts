@@ -8,6 +8,7 @@ export interface Track {
     popularity?: number; // 0-100
     explicit: boolean;
     trackNumber: number; // track number in album
+    imageURL: URL;
     trackURL: URL;
     previewURL: URL; // 30 seconds MP3 preview
 
@@ -24,6 +25,7 @@ export function mapToTrack(track: any): Track {
             popularity: track.popularity,
             explicit: track.explicit,
             trackNumber: track.track_number,
+            imageURL: new URL(track.album.images[0].url),
             trackURL: new URL(track.external_urls.spotify),
             previewURL: new URL(track.preview_url),
 
@@ -37,6 +39,7 @@ export function mapToTrack(track: any): Track {
             duration: track.duration_ms,
             explicit: track.explicit,
             trackNumber: track.track_number,
+            imageURL: new URL(track.album.images[0].url),
             trackURL: new URL(track.external_urls.spotify),
             previewURL: new URL(track.preview_url),
 

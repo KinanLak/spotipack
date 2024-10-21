@@ -1,4 +1,4 @@
-.artist-pill {
+.track-pill {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -14,13 +14,13 @@
     box-sizing: border-box;
 }
 
-.artist-pill:hover {
+.track-pill:hover {
     background-color: #e0e0e0;
     cursor: pointer;
     text-decoration: underline;
 }
 
-.artist-image {
+.track-image {
     width: 5rem;
     height: 5rem;
     border-radius: 4rem;
@@ -28,7 +28,7 @@
     flex-shrink: 0;
 }
 
-.artist-name {
+.track-name {
     flex-grow: 1;
     text-align: center;
     white-space: nowrap;

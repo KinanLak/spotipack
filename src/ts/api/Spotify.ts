@@ -1,5 +1,5 @@
 import AuthManager from "./AuthManager";
-import { User, Track, Artist, Album, mapToAlbum, mapToArtist, mapToTrack } from "../models";
+import { User, Track, Artist, Album, mapToArtist, mapToTrack } from "../models";
 
 export default class Spotify {
     private authManager: AuthManager;
@@ -59,9 +59,6 @@ export default class Spotify {
 
         loggedUser.topTracks = topItems.topTracks;
         loggedUser.topArtists = topItems.topArtists;
-
-        console.log("loggedUser :", loggedUser);
-        console.log("topItems", topItems);
         
         this.loggedUser = loggedUser;
         this.getLoggedUserTopsItems();
@@ -72,7 +69,7 @@ export default class Spotify {
         let response: Response;
 
         try {
-            response = await fetch(process.env.BASE_URL + "/me/top/artists", {
+            response = await fetch(process.env.BASE_URL + "/me/top/artists?limit=29", {
                 headers: this.headers,
             });
         } catch (error) {
@@ -110,7 +107,7 @@ export default class Spotify {
         return { topArtists, topTracks };
     }
 
-    private async getAlbumInfos(albumId: string): Promise<Album> {
+    public async getAlbumInfos(albumId: string): Promise<Album> {
         let response: Response;
 
         try {
@@ -146,7 +143,7 @@ export default class Spotify {
         };
     }
 
-    private async getArtistInfos(artistId: string): Promise<Artist> {
+    public async getArtistInfos(artistId: string): Promise<Artist> {
         let response: Response;
 
         try {
@@ -176,7 +173,7 @@ export default class Spotify {
         };
     }
 
-    private async getTrackInfos(trackId: string): Promise<Track> {
+    public async getTrackInfos(trackId: string): Promise<Track> {
         let response: Response;
 
         try {
@@ -204,8 +201,31 @@ export default class Spotify {
             trackNumber: body.track_number,
             album: body.album,
             artists: body.artists,
+            imageURL: new URL(body.album.images[0].url),
             trackURL: new URL(body.external_urls.spotify),
             previewURL: new URL(body.preview_url),
         };
+    }
+
+    public async getArtistTopTracks(artistId: string): Promise<Track[]> {
+        let response: Response;
+
+        try {
+            response = await fetch(process.env.BASE_URL + "/artists/" + artistId + "/top-tracks?market=FR", {
+                headers: this.headers,
+            });
+        } catch (error) {
+            throw new Error("Erreur lors de la récupération des top morceaux de l'artiste:\n" + error);
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                "Erreur lors de la récupération des top morceaux de l'artiste (status code:" + response.status + ")"
+            );
+        }
+
+        let body = await response.json();
+
+        return body.tracks.map(mapToTrack);
     }
 }
