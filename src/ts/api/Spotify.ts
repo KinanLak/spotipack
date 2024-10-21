@@ -47,7 +47,7 @@ export default class Spotify {
             country: body.country,
             followers: body.followers.total,
             spotifyPlan: body.product,
-            pictureURL: new URL(body.images[0].url),
+            pictureURL: body.images.length > 0 ? new URL(body.images[0].url) : new URL("https://placekitten.com/300/300"),
             userURL: new URL(body.external_urls.spotify),
 
             topArtists: [],
