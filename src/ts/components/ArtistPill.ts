@@ -8,10 +8,18 @@ export class ArtistPill extends HTMLDivElement {
         this.artist = artist;
         this.classList.add("artist-pill");
 
-        this.innerHTML = `
-        <img src="${artist.pictureURL}" alt="Artist Image" class="artist-image">
-        <div id="artist-${artist.id}" class="artist-name">${artist.name}</div>
-        `;
+        const img = document.createElement("img");
+        img.src = artist.pictureURL ? artist.pictureURL.toString() : "https://placecats.com/300/300";
+        img.alt = "Artist Image";
+        img.classList.add("artist-image");
+
+        const div = document.createElement("div");
+        div.id = `artist-${artist.id}`;
+        div.classList.add("artist-name");
+        div.textContent = artist.name;
+
+        this.appendChild(img);
+        this.appendChild(div);
 
         this.addEventListener("click", () => {
             console.error("Navigating to artist", artist.id);

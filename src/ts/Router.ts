@@ -95,7 +95,7 @@ export default class Router {
 
         if (pageLoader) {
             if (this.currentPage) {
-                this.currentPage.container.innerHTML = "";
+                this.currentPage.container.innerHTML = ""
             }
 
             this.currentPage = await pageLoader(params);
