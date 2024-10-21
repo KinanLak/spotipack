@@ -16,6 +16,17 @@
     gap: 2rem;
 }
 
+@media (max-width: 600px) {
+    .page-track-infos {
+        flex-direction: column;
+    }
+
+    .page-track-title {
+        font-size: 2rem;
+    }
+}
+
+
 .page-track-infos img {
     border-radius: 50%;
     width: 16rem;

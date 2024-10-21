@@ -22,7 +22,6 @@ export class ArtistPill extends HTMLDivElement {
         this.appendChild(div);
 
         this.addEventListener("click", () => {
-            console.error("Navigating to artist", artist.id);
             window.router.navigateTo("artist", { id: artist.id });
         });
     }

@@ -1,32 +1,26 @@
-const { merge } = require("webpack-merge"); // Fusionne les configurations
-const common = require("./webpack.common.js"); // Importation de la configuration commune
-const TerserPlugin = require("terser-webpack-plugin"); // Plugin pour minifier le JavaScript
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin"); // Plugin pour minifier le CSS
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
+const TerserPlugin = require("terser-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = merge(common, {
-    mode: "production", // Définit le mode en production, active l'optimisation par défaut (comme la minification)
+    mode: "production",
     output: {
-        filename: "bundle.[contenthash].js", // Utilisation de contenthash pour le cache-busting (force le navigateur à recharger les fichiers modifiés)
+        filename: "bundle.[contenthash].js",
     },
     optimization: {
-        minimize: true, // Active la minification pour réduire la taille des fichiers
+        minimize: true,
         minimizer: [
             new TerserPlugin({
-                parallel: true, // Minification JavaScript en parallèle pour accélérer le processus
+                parallel: true,
                 terserOptions: {
-                    compress: true, // Compression du code pour améliorer les performances
+                    compress: true,
                 },
             }),
-            new CssMinimizerPlugin(), // Minification des fichiers CSS
+            new CssMinimizerPlugin(),
         ],
         splitChunks: {
-            chunks: "all", // Divise le code en morceaux séparés (vendor, app, etc.) pour une meilleure gestion du cache
+            chunks: "all",
         },
     },
-    // Rarely used: CompressionPlugin pour compresser les fichiers en Gzip ou Brotli
-    // plugins: [
-    //   new CompressionPlugin({
-    //     algorithm: 'gzip',
-    //   }),
-    // ],
 });

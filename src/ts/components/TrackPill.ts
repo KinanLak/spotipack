@@ -21,7 +21,6 @@ export class TrackPill extends HTMLDivElement {
         this.appendChild(div);
 
         this.addEventListener("click", () => {
-            console.error("Navigating to track", track.id);
             window.router.navigateTo("track", { id: track.id });
         });
     }
