@@ -7,26 +7,13 @@
         "moduleResolution": "node",
         "strict": true,
         "skipLibCheck": true,
-        "types": [
-            "node"
-        ],
+        "types": ["node"],
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "strictNullChecks": true,
-        "noImplicitAny": true,
+        "noImplicitAny": true
     },
-    "typeRoots": [
-        "./node_modules/@types",
-        "./types"
-    ],
-    "include": [
-        "images/**/*",
-        "src/**/*",
-        ".env",
-        "./types/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "include": ["images/**/*", "src/**/*", ".env", "./types/*"],
+    "exclude": ["node_modules", "dist"]
 }
