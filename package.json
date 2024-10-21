@@ -5,10 +5,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KinanLak/spotipack.git"   
+  },
+  "homepage": {
+    "homepage": "http://kinanlak.github.io/spotipack",
   },
   "keywords": [],
-  "author": "Perez Alexandre",
+  "author": "Kinan LAKHDAR",
   "license": "ISC",
   "description": "",
   "devDependencies": {
